@@ -41,7 +41,7 @@ private JdbcTemplate jdbcTemplate;
 //    	tipoActividad.setDescripcion("descripcion");
 //    	tipoActividad.setFoto("");
 //    	tipoActividad.setRequisitos("");
-		return this.jdbcTemplate.query("select tipo, descripcion, foto, requisitos from TipoActividad", new TipoActividadMapper());
+		return this.jdbcTemplate.query("select tipo, descripcion, foto, requisitos from TipoActividad where activa='SI' ", new TipoActividadMapper());
 	}	
 	
 	public TipoActividad getTipoActividad(String tipo) {
@@ -50,7 +50,7 @@ private JdbcTemplate jdbcTemplate;
 	
 	public void addTipoActividad(TipoActividad tipoActividad) {
 		this.jdbcTemplate.update(
-				"insert into TipoActividad(tipo, descripcion, foto, requisitos ) values( ?, ?, ?, ?)", tipoActividad.getTipo() , tipoActividad.getDescripcion() , tipoActividad.getFoto() , tipoActividad.getRequisitos() );
+				"insert into TipoActividad(tipo, descripcion, foto, requisitos, activa ) values( ?, ?, ?, ?, 'SI')", tipoActividad.getTipo() , tipoActividad.getDescripcion() , tipoActividad.getFoto() , tipoActividad.getRequisitos() );
 	}
 	
 	public void updateTipoActividad(TipoActividad tipoActividad) {
@@ -61,7 +61,7 @@ private JdbcTemplate jdbcTemplate;
 	
 	public void deleteTipoActividad(String tipo) {
 		this.jdbcTemplate.update(
-		        "delete from TipoActividad where tipo = ?",
-		        tipo);
+		        "update TipoActividad set activa = 'NO' where tipo = ? ; update Actividad set activa = 'NO' where tipo = ? ;",
+		        tipo,tipo);
 	}
 }
