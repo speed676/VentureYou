@@ -77,11 +77,11 @@ public class ActividadDAO {
 	}
 	
 	public List<Actividad> getActividades() {
-		 return this.jdbcTemplate.query("select idActividad, nombre, tipo, duracionHoras, descripcion, minParticipantes, maxParticipantes, oferta, nuevo, localizacion, foto from actividad", new ActividadMapper());
+		 return this.jdbcTemplate.query("select idActividad, nombre, tipo, duracionHoras, descripcion, minParticipantes, maxParticipantes, oferta, nuevo, localizacion, foto from actividad where activa='SI' ", new ActividadMapper());
 	}
 	
 	public List<Actividad> getActividadesDeTipo(String tipo) {
-		List<Actividad> lista = this.jdbcTemplate.query("select idActividad, nombre, tipo, duracionHoras, descripcion, minParticipantes, maxParticipantes, oferta, nuevo, localizacion, foto from actividad where tipo= ?", new Object[] {tipo} ,new ActividadMapper());
+		List<Actividad> lista = this.jdbcTemplate.query("select idActividad, nombre, tipo, duracionHoras, descripcion, minParticipantes, maxParticipantes, oferta, nuevo, localizacion, foto from actividad where tipo= ? and activa='SI'", new Object[] {tipo} ,new ActividadMapper());
 		if (lista != null){ return lista;}
 		else {return null;}
 	}
@@ -91,7 +91,7 @@ public class ActividadDAO {
 	}
 	
 	public int addActividad(Actividad actividad) {
-		final String INSERT_SQL = "insert into Actividad (nombre, tipo, duracionHoras, descripcion, minParticipantes, maxParticipantes, oferta, nuevo, localizacion, foto) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		final String INSERT_SQL = "insert into Actividad (nombre, tipo, duracionHoras, descripcion, minParticipantes, maxParticipantes, oferta, nuevo, localizacion, foto, activa) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'SI')";
 		// ,  ,, , actividad.getMinParticipantes(), actividad.getMaxParticipantes(), actividad.getOferta(), actividad.getNuevo(), actividad.getLocalizacion(), actividad.getFoto()
 		final String nombre = actividad.getNombre();
 		final String tipo = actividad.getTipo();
@@ -153,7 +153,7 @@ public class ActividadDAO {
 	
 	public void deleteActividad(int idActividad) {
 		this.jdbcTemplate.update(
-		        "delete from actividad where idActividad = ?",
+		        "update actividad set activa = 'NO' where idActividad = ?",
 		        idActividad);
 	}
 	
