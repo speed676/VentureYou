@@ -171,7 +171,24 @@
 						<div class="isotope-container row grid-space-20">
 				
 				  <c:forEach items="${tiposdeactividades}" var="tactividad"> 
-							<div class="col-sm-6 col-md-3 isotope-item novedades">
+				  <c:if test="${not empty mapaOfertas}">
+					<c:set var="esoferta" value="${mapaOfertas[tactividad.tipo]}" />
+					</c:if>
+					<c:if test="${not empty mapaNovedades}">
+					<c:set var="esnovedad" value="${mapaNovedades[tactividad.tipo]}" />
+					</c:if>
+					<c:choose>
+                            <c:when test="${esoferta}">
+                            <div class="col-sm-6 col-md-3 isotope-item ofertas">
+                            </c:when>
+                            <c:when test="${esnovedad && !esoferta}">
+                            <div class="col-sm-6 col-md-3 isotope-item novedades">
+                            </c:when>
+                            <c:when test="${!esnovedad && !esoferta}">
+                            <div class="col-sm-6 col-md-3 isotope-item">  
+                            </c:when>
+                    </c:choose>
+						
 								<div class="well well-sm">
 									<div class="overlay-container">
 										<img src="${pageContext.request.contextPath}/resources/images/${tactividad.foto}" alt="">
