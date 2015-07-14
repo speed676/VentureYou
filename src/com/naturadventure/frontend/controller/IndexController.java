@@ -40,6 +40,7 @@ import com.naturadventure.domain.Reserva;
 import com.naturadventure.domain.Actividad;
 import com.naturadventure.domain.HorasInicio;
 import com.naturadventure.domain.NivelActividad;
+import com.naturadventure.domain.TipoActividad;
 
 
 @Controller
@@ -68,9 +69,38 @@ public class IndexController {
 
 	@RequestMapping("/index")
 	    public String index(Model model) {
-		 model.addAttribute("tiposdeactividades", tipoActividadDao.getTiposActividad());
-		
-	     return "index";
+			List<TipoActividad> listaTiposActividades = tipoActividadDao.getTiposActividad();
+			
+			HashMap<String, Boolean> mapaDeOfertas = new HashMap<String, Boolean>();
+			
+			HashMap<String, Boolean> mapaDeNovedades = new HashMap<String, Boolean>();
+			
+			for(TipoActividad tipo : listaTiposActividades) {
+			
+				mapaDeNovedades.put(tipo.getTipo(), false);
+				mapaDeOfertas.put(tipo.getTipo(), false);
+				List<Actividad> listaActividades = actividadDao.getActividadesDeTipo(tipo.getTipo());
+				 for(Actividad actividad : listaActividades) {
+			
+					 if (actividad.getOferta() != null){
+						 String oferta = actividad.getOferta(); 
+					 	if (  oferta.equalsIgnoreCase("oferta") ){
+			
+						 mapaDeOfertas.put(actividad.getTipo(), true);
+					 	}
+				 	 }
+					 int nuevo = actividad.getNuevo();
+					 if (   nuevo == 1 ){ 
+			
+						 mapaDeNovedades.put(tipo.getTipo(), true);
+					 }
+				 }
+			}
+		 	
+		 	model.addAttribute("tiposdeactividades", listaTiposActividades);
+		 	model.addAttribute("mapaNovedades", mapaDeNovedades);
+		 	model.addAttribute("mapaOfertas", mapaDeOfertas);
+		 	return "index";
 	    }
 	
 	 @RequestMapping(value="/actividad/{tipo}", method = RequestMethod.GET) 
