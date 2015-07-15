@@ -43,5 +43,11 @@ public class SupervisarDAO {
 		this.jdbcTemplate.update(
 				"insert into Supervisar(tipo, usuario) values( ?, ?)", tipo , usuario );
 	}
+	
+	
+	public void borrarSupervision(String tipo, String usuario){
+		this.jdbcTemplate.update("delete from Supervisar where tipo = ? AND usuario = ?",
+		        tipo, usuario);
+	}
 
 }
