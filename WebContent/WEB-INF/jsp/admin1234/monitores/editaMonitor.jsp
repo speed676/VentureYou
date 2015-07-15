@@ -118,6 +118,41 @@
 		                    </div>
 	                    </div><!-- /.form-group -->
 
+<div class="form-group">
+		                    <label for="supervisar" class="control-label col-lg-3">Actividades a supervisar</label>
+		                    <div class="col-lg-9">
+		                    <c:forEach items="${listaActividades}" var="actividad">
+		                    	<div class="checkbox">
+	                            	<label>
+	                            	
+	                            		<c:if test="${empty actividad}">
+							        	
+                              			<label>
+	                              			<input name="${actividad.tipo}" tabindex="5" class="uniform" type="checkbox" value="${actividad.tipo}"> ${actividad.tipo}
+                            			</label>
+	                            		
+								    </c:if>
+								    <c:if test="${not empty actividad}">
+							        	
+                              			<label>
+	                              			<input name="${actividad.tipo}" tabindex="5" class="uniform" type="checkbox" value="${actividad.tipo}" checked="checked"> ${actividad.tipo}
+                            			</label>
+	                            		
+								    </c:if>
+	                            	
+	                            	
+	                            	
+	                            			
+	                            	</label>
+	                          	</div>
+	                        </c:forEach>
+	                          	
+		                    </div>
+	                    </div>
+	                    
+
+
+
                       <hr>
                       <div class="form-actions no-margin-bottom">
                           <form:button type="submit" value="Guardar" class="btn btn-primary">Guardar</form:button>
