@@ -12,9 +12,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +28,7 @@ import com.naturadventure.dao.ReservaDAO;
 import com.naturadventure.dao.SupervisarDAO;
 import com.naturadventure.dao.TipoActividadDAO;
 import com.naturadventure.dao.UserDAO;
+import com.naturadventure.dao.UsuarioDAO;
 import com.naturadventure.domain.Actividad;
 import com.naturadventure.domain.HorasInicio;
 import com.naturadventure.domain.Monitor;
@@ -46,6 +49,8 @@ public class UserController {
    private ReservaDAO reservaDao;
    private MonitorDAO monitorDao;
    private SupervisarDAO supervisarDao;
+   private UsuarioDAO usuarioDao;
+
 	
    @Autowired
    public void setActividadDAO(ActividadDAO actividadDAO) { 
@@ -77,6 +82,12 @@ public class UserController {
        this.supervisarDao = supervisarDao;
    }
   
+   @Autowired 
+   public void setUsuarioDao(UsuarioDAO usuarioDao) {
+       this.usuarioDao = usuarioDao;
+   }
+  
+   
    @RequestMapping("/inicio.html") 
    public String listSocis(HttpSession session, Model model) {
        if (session.getAttribute("user") == null) 
@@ -282,23 +293,46 @@ public class UserController {
        return "admin1234/monitor/monitor";
    }
    
-   /*
-   @RequestMapping("/nuevoTipoActividad.html") 
-   public String addTipoActividad(HttpSession session, Model model) {
-	   if (session.getAttribute("user") == null) 
-       { 
-		   model.addAttribute("user", new UserDetails()); 
-           return "admin1234/login";
-       } 
-       
-	   List<TipoActividad>listaTipoActividad = tipoActividadDao.getTiposActividad();
-	   //System.out.println(listaTipoActividad);
-	   model.addAttribute("listaTipoActividades", listaTipoActividad);
-	   model.addAttribute("tipoActividad", new TipoActividad());
-	   model.addAttribute("fra", new TipoActividad());
-	   
-       return "admin1234/nuevoTipoActividad";
-       
-   }*/
+// dar de alta gerentes
+		@RequestMapping("/nuevoGerente.html") 
+		   public String addGerente(HttpSession session, Model model){
+			if (session.getAttribute("user") == null) 
+		       { 
+				   model.addAttribute("user", new UserDetails()); 
+				   return "redirect:../../admin1234/login.html";
+		       }
+			   UserDetails gerente = new UserDetails();
+			   
+				System.out.println("prueba ");
+
+			   model.addAttribute("Gerente", gerente);
+			return "admin1234/nuevoGerente";
+		}
+		
+		@RequestMapping(value = "/nuevoGerente.html", method=RequestMethod.POST) 
+		public String processAddGerente(Model model, @ModelAttribute("Gerente") UserDetails gerente, HttpSession session, HttpServletRequest request){
+			if (session.getAttribute("user") == null) 
+		       { 
+				   model.addAttribute("user", new UserDetails()); 
+		           return "admin1234/login";
+		       }
+			
+			BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor(); 
+
+			System.out.println("pst 111: " + gerente.getUsuario());
+
+			
+			UserDetails gestor= new UserDetails();
+			gestor.setRol("GESTOR");
+			gestor.setUsuario(gerente.getUsuario());
+			gestor.setContrasenya(passwordEncryptor.encryptPassword(gerente.getContrasenya()));
+			System.out.println("pst: " + gestor.getUsuario());
+			usuarioDao.addUsuario(gestor);
+		
+			
+			return "redirect:inicio.html";
+		}
+	
+   
    
 }
