@@ -25,6 +25,9 @@
                 <a data-toggle="modal" data-original-title="Help" data-placement="bottom" class="btn btn-default btn-sm" href="#helpModal">
                   <i class="fa fa-question"></i>
                 </a> 
+                <a  data-original-title="Añadir gerentes" data-placement="bottom" class="btn btn-default btn-sm" href="nuevoGerente.html">
+                  <i class="fa fa-cog"></i>
+                </a> 
                 <a href="${pageContext.request.contextPath}/admin1234/logout.html" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-metis-1 btn-sm">
                   <i class="fa fa-power-off"></i>
                 </a> 
