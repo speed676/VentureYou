@@ -108,42 +108,69 @@ public class MonitorController {
 	
 	 
 	
-	//LLama a la pantalla de edicion
-	@RequestMapping(value="/editaMonitor/{usuario}.html", method=RequestMethod.GET)
-	public String editMonitor(HttpSession session, Model model, @PathVariable String usuario) {
-		if (session.getAttribute("user") == null) 
-		   { 
-		      model.addAttribute("user", new UserDetails()); 
-		      return "redirect:../../admin1234/login.html";
-		   }
+		//LLama a la pantalla de edicion
+		@RequestMapping(value="/editaMonitor/{usuario}.html", method=RequestMethod.GET)
+		public String editMonitor(HttpSession session, Model model, @PathVariable String usuario) {
+			if (session.getAttribute("user") == null) 
+			   { 
+			      model.addAttribute("user", new UserDetails()); 
+			      return "redirect:../../admin1234/login.html";
+			   }
+				
+			if(usuario == null){
+				return "redirect:/admin1234/monitores.html";
+			}
+				//System.out.println("en edita"+usuario);
+			   Monitor monitor = monitorDao.getMonitor(usuario);
+			   List<TipoActividad> actividades = tipoActividadDao.getTiposActividad();
+			   model.addAttribute("listaActividades", actividades);
+			   
+			   //System.out.println(monitor.toString());
+			   model.addAttribute("monitor", monitor);
+			   return "admin1234/monitores/editaMonitor";
+		   }	
+		
+		//Procesa el guardar de editar monitor
+		@RequestMapping(value="/editaMonitorSubmit.html", method=RequestMethod.POST)
+		public String processUpdateSubmit(@ModelAttribute("monitor") Monitor monitor, HttpSession session, Model model, HttpServletRequest request) {
+			if (session.getAttribute("user") == null) 
+			   { 
+			      model.addAttribute("user", new UserDetails()); 
+			      return "redirect:admin1234/login.html";
+			   }
 			
-		if(usuario == null){
-			return "redirect:/admin1234/monitores.html";
+				//System.out.println(monitor.toString());
+				monitorDao.updateMonitor(monitor);
+			
+				List<TipoActividad> actividades = tipoActividadDao.getTiposActividad();
+				
+				
+				
+				List<String> tiposSupervisadosAnteriormente = supervisarDao.getTiposActividadesSupervisadasPorMonitor(monitor.getUsuario());
+				List<String> tiposChecked = new LinkedList<String>();
+				
+				Iterator<TipoActividad> iter = actividades.iterator();
+				TipoActividad actividad;
+				while (iter.hasNext()){
+					actividad = iter.next();
+					if (request.getParameter(actividad.getTipo()) != null){
+						tiposChecked.add(actividad.getTipo());
+						if(!tiposSupervisadosAnteriormente.contains(actividad.getTipo()))
+							supervisarDao.addSupervision(actividad.getTipo(), monitor.getUsuario());
+					}
+				}
+				
+				for(String tipo:tiposSupervisadosAnteriormente){
+						if(!tiposChecked.contains(tipo)){
+							supervisarDao.borrarSupervision(tipo, monitor.getUsuario());
+						}
+					
+				}
+					
+				
+				
+				return "redirect:/admin1234/monitores.html"; 
 		}
-			//System.out.println("en edita"+usuario);
-		   Monitor monitor = monitorDao.getMonitor(usuario);
-		   
-		   //System.out.println(monitor.toString());
-		   model.addAttribute("monitor", monitor);
-		   return "admin1234/monitores/editaMonitor";
-	   }	
-	
-	//Procesa el guardar de editar monitor
-	@RequestMapping(value="/editaMonitorSubmit.html", method=RequestMethod.POST)
-	public String processUpdateSubmit(@ModelAttribute("monitor") Monitor monitor, HttpSession session, Model model) {
-		if (session.getAttribute("user") == null) 
-		   { 
-		      model.addAttribute("user", new UserDetails()); 
-		      return "redirect:admin1234/login.html";
-		   }
-		
-			//System.out.println(monitor.toString());
-			monitorDao.updateMonitor(monitor);
-		
-		
-			return "redirect:/admin1234/monitores/"+monitor.getUsuario()+".html"; 
-	}
-	
 	//Eliminacion
 	@RequestMapping(value="/borrarMonitor/{usuario}.html")
 	   public String processDelete(HttpSession session, Model model, @PathVariable String usuario) {
