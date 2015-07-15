@@ -1,6 +1,7 @@
 package com.naturadventure.frontend.controller;
 
 import java.util.Date;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,9 +16,11 @@ import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 import javax.mail.internet.AddressException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import mail.Mail;
+import qrcode.GeneradorDeQR;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -32,6 +35,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import qrcode.GeneradorDeQR;
 
 import com.naturadventure.dao.TipoActividadDAO;
 import com.naturadventure.dao.ActividadDAO;
@@ -66,6 +71,9 @@ public class IndexController {
     public void setReservaDAO(ReservaDAO reservaDAO) { 
         this.reservaDao = reservaDAO;
     }
+    
+    @Autowired
+    ServletContext context;
 
 	@RequestMapping("/index")
 	    public String index(Model model) {
@@ -114,7 +122,7 @@ public class IndexController {
 		 	List<Actividad> listaActividades = actividadDao.getActividadesDeTipo(tipo);
 	      //  List<String> listaNivelesUnicos = actividadDao.getNivelesUnicos();
 	        
-	        String nivelVar = ""; 
+	        
 	        if (listaActividades != null){
 	        for(Actividad actividad : listaActividades) {
 	     
@@ -182,18 +190,47 @@ public class IndexController {
 	        return "reserva";
 	    }
 	
+	 
+	 @RequestMapping(value="/datosreserva/{id}", method = RequestMethod.GET)
+	    public String reserva(Model model, @PathVariable Integer id) {
+		    
+		 	Reserva reserva = reservaDao.getReserva(id);
+		 	Actividad actividad = actividadDao.getActividad(reserva.getIdActividad());
+		 	TipoActividad tipo = tipoActividadDao.getTipoActividad(actividad.getTipo());
+		 	NivelActividad objNivel =  actividadDao.getPrecioNivel(reserva.getIdActividad(),reserva.getNivel());
+		 	double precioIva = objNivel.getPrecioPorPersona() * reserva.getNumParticipantes() ;
+		 	
+		 	double varPrecioIva = precioIva + (precioIva * 0.21) ;
+		 	model.addAttribute("precioiva", varPrecioIva);
+		 	
+		    model.addAttribute("reserva",reserva);
+			model.addAttribute("actividad", actividad );
+		 	model.addAttribute("tipo", tipo );
+		    return "inforeserva";
+	    }
 
 	 @RequestMapping(value="/pedido", method=RequestMethod.POST)
 	 	public String pedido(Model model, @ModelAttribute("reserva") Reserva reserva, BindingResult bindingResult) {
 		 Date actual = new Date();
 		 if (bindingResult.hasErrors()|| actual.after(reserva.getFechaActividad())) 
 			 return "redirect:actividad/reserva/"+reserva.getIdActividad()+"/"+reserva.getNivel()+".html";
-		 //System.out.println(" errores  " +bindingResult.toString() );
+		 
 		 		
 		 		//return "/actividad/reserva/";
 		 		
 		 	Integer idreserva = reservaDao.addReserva(reserva);
 		 	
+		 	
+		 	
+		 	// creeamos el QR para la reserva
+	        String rootPath = context.getRealPath( File.separator + "resources" );
+	        File dir = new File(rootPath + File.separator + "images");
+	        if (!dir.exists())
+	            dir.mkdirs();
+			String p =dir.getAbsolutePath()+ File.separator;
+		 	GeneradorDeQR q = new GeneradorDeQR(idreserva,p);
+			q.creea();
+			
 		 	reserva = reservaDao.getReserva(idreserva);
 		 	Actividad actividad = actividadDao.getActividad(reserva.getIdActividad());
 		 	NivelActividad objNivel =  actividadDao.getPrecioNivel(reserva.getIdActividad(),reserva.getNivel());
