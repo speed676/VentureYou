@@ -118,33 +118,27 @@
 		                    </div>
 	                    </div><!-- /.form-group -->
 
-<div class="form-group">
+						<div class="form-group">
 		                    <label for="supervisar" class="control-label col-lg-3">Actividades a supervisar</label>
 		                    <div class="col-lg-9">
-		                    <c:forEach items="${listaActividades}" var="actividad">
-		                    	<div class="checkbox">
-	                            	<label>
-	                            	
-	                            		<c:if test="${empty actividad}">
-							        	
-                              			<label>
-	                              			<input name="${actividad.tipo}" tabindex="5" class="uniform" type="checkbox" value="${actividad.tipo}"> ${actividad.tipo}
-                            			</label>
-	                            		
-								    </c:if>
-								    <c:if test="${not empty actividad}">
-							        	
-                              			<label>
-	                              			<input name="${actividad.tipo}" tabindex="5" class="uniform" type="checkbox" value="${actividad.tipo}" checked="checked"> ${actividad.tipo}
-                            			</label>
-	                            		
-								    </c:if>
-	                            	
-	                            	
-	                            	
-	                            			
-	                            	</label>
-	                          	</div>
+		                    	<c:forEach items="${actividades}" var="actividades">
+		                    		
+			                    		<div class="checkbox">
+
+		                            		<c:if test="${empty actividades.value}">
+			                            		<label>
+									        		<input name="${actividades.key}" tabindex="5" class="uniform" type="checkbox" value="${actividades.key}"> ${actividades.key}
+									        	</label>
+								        	</c:if>
+								        	
+									    	<c:if test="${not empty actividades.value}">
+		                              			<label>
+			                              			<input name="${actividades.key}" tabindex="5" class="uniform" type="checkbox" value="${actividades.key}" checked="checked"> ${actividades.key}
+		                            			</label>
+									    	</c:if>
+									    	
+	                          			</div>
+	                          			
 	                        </c:forEach>
 	                          	
 		                    </div>

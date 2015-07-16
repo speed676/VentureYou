@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -122,11 +123,32 @@ public class MonitorController {
 			}
 				//System.out.println("en edita"+usuario);
 			   Monitor monitor = monitorDao.getMonitor(usuario);
-			   List<TipoActividad> actividades = tipoActividadDao.getTiposActividad();
-			   model.addAttribute("listaActividades", actividades);
+			   List<TipoActividad> tiposActividades = tipoActividadDao.getTiposActividad();
+			   //System.out.println(tiposActividades.toString());
+			   model.addAttribute("listaTiposActividades", tiposActividades);
 			   
 			   //System.out.println(monitor.toString());
 			   model.addAttribute("monitor", monitor);
+			   //System.out.println(monitor.toString());
+			   
+			   List<String> listaActividadesSupervisadas = supervisarDao.getTiposActividadesSupervisadasPorMonitor(monitor.getUsuario());
+			   //System.out.println(listaActividadesSupervisadas.toString());
+			   
+			   
+			   Map<String, String> listaFinal = new HashMap<String, String>();
+			   
+			   Iterator<TipoActividad> it = tiposActividades.iterator();
+			   while (it.hasNext()) {
+					TipoActividad tipoActividad = it.next();
+					
+					if(listaActividadesSupervisadas.contains(tipoActividad.getTipo())){
+						listaFinal.put(tipoActividad.getTipo(), "checked");
+					}else{
+						listaFinal.put(tipoActividad.getTipo(), "");
+					}
+			   }
+			   model.addAttribute("actividades", listaFinal);
+			   
 			   return "admin1234/monitores/editaMonitor";
 		   }	
 		
