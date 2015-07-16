@@ -327,7 +327,7 @@
 						
 						
 						
-						<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+						<div class="fb-share-button" data-href="http://localhost:8080/PracticaSpring/actividad/${tipoactividad.tipo}.html" data-layout="button_count"></div>
 						
 						
 						
