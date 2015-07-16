@@ -275,5 +275,22 @@ public class IndexController {
 	        return result;
 	    }
 	   	
+	   	
+	   	@RequestMapping("/cookies")
+	    public String cookies(Model model) {
+			
+		 	
+		 	
+		 	return "cookies";
+	    }
+	
+	   	@RequestMapping("/AvisoLegal")
+	    public String avisoLegal(Model model) {
+			
+		 	
+		 	
+		 	return "AvisoLegal";
+	    }
+	   	
 }
 
