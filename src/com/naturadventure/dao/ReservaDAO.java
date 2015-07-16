@@ -168,6 +168,8 @@ public class ReservaDAO {
 				"update reserva set estado=?, monitor=null where idReserva=?",estado,idreserva);
 	}
 	
-	
+	public List<Reserva> getReservasMonitor(String monitor) {
+		 return this.jdbcTemplate.query("select idReserva, nombreCliente, telefonoCliente, emailCliente, horaInicio, estado, numParticipantes, fechaReserva, fechaActividad, nivel, idActividad from reserva where monitor = ? ", new Object[] {monitor}, new ReservaMapper());
+	 }
 	
 }
