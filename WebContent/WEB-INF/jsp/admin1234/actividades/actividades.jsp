@@ -98,7 +98,7 @@
                     <div class="toolbar">
                       <nav style="padding: 8px;">
                         <a href="${pageContext.request.contextPath}/admin1234/nuevaActividad.html" class="btn btn-success btn-xs">
-                          <i class="fa fa-plus"></i>
+                          Añadir <i class="fa fa-plus"></i>
                         </a> 
                       </nav>
                     </div><!-- /.toolbar -->
