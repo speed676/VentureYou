@@ -19,7 +19,8 @@
 
 		<!-- Favicon -->
 		<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/logo.png">
-
+		<meta name="theme-color" content="#7DB338">
+	
 		<!-- Web Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>

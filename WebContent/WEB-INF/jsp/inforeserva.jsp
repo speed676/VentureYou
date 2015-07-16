@@ -20,6 +20,7 @@
 
 		<!-- Favicon -->
 		<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/logo.png">
+		<meta name="theme-color" content="#7DB338">
 
 		<!-- Web Fonts -->
 		<link href="${pageContext.request.contextPath}/resources/css/fonts.css" rel='stylesheet' type='text/css'>
