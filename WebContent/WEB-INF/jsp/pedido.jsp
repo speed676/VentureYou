@@ -18,7 +18,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<!-- Favicon -->
-		<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico">
+		<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/resources/images/logo.png">
 
 		<!-- Web Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
