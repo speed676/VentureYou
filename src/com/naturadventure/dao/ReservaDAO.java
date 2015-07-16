@@ -25,8 +25,15 @@ import org.springframework.stereotype.Repository;
 
 
 
+
+
+
+import com.naturadventure.domain.DatosMes;
 import com.naturadventure.domain.Monitor;
 import com.naturadventure.domain.Reserva;
+
+
+
 
 
 @Repository
@@ -39,6 +46,21 @@ public class ReservaDAO {
 	        this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
+	
+	
+	private static final class DatosMesMapper implements RowMapper<DatosMes> { 
+		
+	    public DatosMes mapRow(ResultSet rs, int rowNum) throws SQLException { 
+	    	DatosMes mes = new DatosMes(); 
+	    	mes.setMes(rs.getInt("mes"));
+	    	mes.setNumero(rs.getInt("suma"));
+	        
+
+
+	        return mes;
+	    }
+	}
+	
 	private static final class ReservaMapper implements RowMapper<Reserva> { 
 		
 	    public Reserva mapRow(ResultSet rs, int rowNum) throws SQLException { 
@@ -70,6 +92,7 @@ public class ReservaDAO {
 	    }
 	}
 	
+	
 	public List<Reserva> getReservas() {
 		 return this.jdbcTemplate.query("select idReserva, nombreCliente, telefonoCliente, emailCliente, horaInicio, estado, numParticipantes, fechaReserva,  fechaActividad, monitor, nivel , idActividad from reserva", new ReservaMapper());
 	}	 
@@ -80,6 +103,11 @@ public class ReservaDAO {
 	
 	public List<Reserva> getReservasAPartirDeHoy() {
 		return this.jdbcTemplate.query("select idReserva, nombreCliente, telefonoCliente, emailCliente, horaInicio, estado, numParticipantes, fechaReserva,  fechaActividad, nivel, idActividad, monitor from reserva where fechaactividad >= CURRENT_DATE ORDER BY fechaactividad", new ReservaMapper());
+	}
+	
+	public List<DatosMes> getReservasMes() {
+		List<DatosMes> num_reservas = this.jdbcTemplate.query("select to_char(fechaactividad,'MM') as mes, count(*) as suma  from reserva where fechaactividad>CURRENT_DATE and fechaactividad<(CURRENT_DATE+365) group by 1;", new DatosMesMapper());
+		return num_reservas;
 	}
 	
 	//Si estado es igual a pendiente
