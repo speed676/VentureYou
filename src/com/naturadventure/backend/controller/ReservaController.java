@@ -33,6 +33,7 @@ import com.naturadventure.dao.MonitorDAO;
 import com.naturadventure.dao.ReservaDAO;
 import com.naturadventure.dao.UserDAO;
 import com.naturadventure.domain.Actividad;
+import com.naturadventure.domain.DatosMes;
 import com.naturadventure.domain.HorasInicio;
 import com.naturadventure.domain.Monitor;
 import com.naturadventure.domain.NivelActividad;
@@ -79,6 +80,29 @@ public class ReservaController {
 				auxmapActividades.put(actividad.getIdActividad(),actividad.getNombre());
 			}
 		}
+		List<DatosMes> reservasPorMes = reservaDao.getReservasMes();
+		
+		Integer[] vector = new Integer[12];
+		Boolean eresMes = false;
+		if (reservasPorMes != null){
+	       for (int i = 0; i < vector.length; i++) {
+	    	   for(DatosMes dm : reservasPorMes) {
+	    		   
+	    		   if ( dm.getMes() == i+1){
+	    			   vector[i]=dm.getNumero();
+	    			   eresMes= true;
+	    		   }
+	    	   }
+	    	   if (!eresMes) { 
+    			   vector[i]=0;
+    		   }
+	    	   eresMes = false;
+	       }
+		}
+	       
+		
+		
+		model.addAttribute("reservasMes", vector);
 		model.addAttribute("fechaactual", new Date());
 		model.addAttribute("listadoDeReservas", reservaDao.getReservas());
 		model.addAttribute("mapActividades", auxmapActividades);
