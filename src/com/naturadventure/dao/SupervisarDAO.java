@@ -35,7 +35,7 @@ public class SupervisarDAO {
 
 
 	public List<String> getTiposActividadesSupervisadasPorMonitor(String usuario) {
-		List<String> actividadesSupervisadas = this.jdbcTemplate.query("select tipo from supervisar where usuario = ? ",  new Object[] {usuario}, new SupervisaMapper());
+		List<String> actividadesSupervisadas = this.jdbcTemplate.query("select supervisar.tipo from supervisar, tipoactividad where supervisar.tipo=tipoactividad.tipo and supervisar.usuario = ? and tipoactividad.activa='SI' ",  new Object[] {usuario}, new SupervisaMapper());
 		return actividadesSupervisadas;
 	}
 
