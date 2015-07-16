@@ -1,5 +1,9 @@
 package com.naturadventure.backend.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -142,10 +146,22 @@ public class UserController {
        
        String cadenaMonitores = "[[0, "+listaNumeroMonitores.size()+"], [365, "+listaNumeroMonitores.size()+"]]";
        
+       
+       //Lista total mezclada para el fichero Excell
+       String cadenaCSV = "[[0, "+listaNumeroMonitores.size()+"],";
+       for (int i = 1; i < vector.length-1; i++) {
+    	   if(i != 0)
+    		   cadenaCSV += ",";
+    	   cadenaCSV+="["+(i+1)+", "+vector[i]+"]";
+       }
+       cadenaCSV += ", [365, "+listaNumeroMonitores.size()+"]]";
+       //System.out.println(cadenaCSV);
+       
        //System.out.println(cadena);
        
        model.addAttribute("listaReservas", cadena);
        model.addAttribute("listaMonitores", cadenaMonitores);
+       model.addAttribute("listaTotalReservas", cadenaCSV);
        
        return "admin1234/inicio";
    }

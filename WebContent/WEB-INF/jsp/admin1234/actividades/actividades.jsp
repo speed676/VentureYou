@@ -162,7 +162,7 @@
 
     </div><!-- /#wrap -->
     <footer class="Footer bg-dark dker">
-      <p>2015 &copy; Project GAGA team</p>
+      <p>2015 &copy; Project AGG team</p>
     </footer><!-- /#footer -->
 
     <!-- #helpModal -->
