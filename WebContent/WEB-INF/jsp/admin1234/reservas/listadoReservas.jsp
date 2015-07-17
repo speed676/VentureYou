@@ -281,11 +281,16 @@
         });
         
         $('#botonnCSV').click(function(){
- 	        var data = [[1,1]];//${listaTotalReservas};
+        	var meses=${reservasMes};
+	    	var data = [ ["Enero", meses[0]], ["Febrero", meses[1]], ["Marzo", meses[2]], ["Abril", meses[3]], ["Mayo", meses[4]], ["Junio", meses[5]], ["Julio", meses[6]],
+	        ["Agosto", meses[7]], ["Septiembre", meses[8]], ["Octubre", meses[9]], ["Noviembre", meses[10]], ["Diciembre", meses[11]]];
+	    	
+        	
+        	
  	        if(data == '')
  	            return;
  	        
- 	        JSONToCSVConvertor(data, "Reservas anuales", true);
+ 	        JSONToCSVConvertor(data, "Reservas por mes", true);
     });
 
 

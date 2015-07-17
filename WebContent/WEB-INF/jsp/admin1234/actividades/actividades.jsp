@@ -71,7 +71,7 @@
         <div class="outer">
           <div class="inner bg-light lter">
   
-            <div class="row">
+           <!--  <div class="row">
               <div class="col-lg-12">
                 <div class="box">
                   <header>
@@ -81,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <hr>
+            <hr> -->
 
 
 
@@ -224,10 +224,7 @@
     	  var contexto = "${pageContext.request.contextPath}";
 		
 		
-          Metis.dashboard();
-          //Metis.MetisChart();
-          Metis.MetisTable();
-          Metis.metisSortable();
+          
           
           console.log("arrancado");
         });
