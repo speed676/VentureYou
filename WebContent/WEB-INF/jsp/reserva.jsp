@@ -239,7 +239,7 @@
 					                </div>
 					                <div class="form-group">
 					                    <label class="control-label">Teléfono</label>
-					                    <form:input path="telefonoCliente" maxlength="9" type="number" class="form-control" placeholder="Teléfono de contacto" min="100000000" max="999999999" required="required"/> 
+					                    <form:input path="telefonoCliente" maxlength="9" type="tel" class="form-control" placeholder="Teléfono de contacto" min="100000000" max="999999999" required="required"/> 
 					                </div>
 					                <div class="form-group">
 					                    <label class="control-label">Email</label>
