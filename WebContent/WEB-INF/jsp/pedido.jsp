@@ -162,7 +162,7 @@
 									<li><i class="fa fa-phone pr-10"></i><a href="tel:+34 1234567890">+34 1234567890</a></li>
 									<li><i class="fa fa-envelope-o pr-10"></i><a href="mailto:naturadventure@email.com"> naturadventure@email.com</a></li>
 								</ul>
-							<p> <img src="${pageContext.request.contextPath}/resources/images/QR_${reserva.idreserva}.png" >
+							<p> <img src="${pageContext.request.contextPath}/resources/images/QR_${reserva.idReserva}.png" >
 							</p>
 						</div>
 						<div class="col-sm-7">
