@@ -193,6 +193,10 @@
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.selection.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.resize.min.js"></script>
 
+	<!--jQuery -->
+    <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.categories.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.pie.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.dataTables.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/admin/js/dataTables.bootstrap.js"></script>
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.tablesorter.min.js"></script>

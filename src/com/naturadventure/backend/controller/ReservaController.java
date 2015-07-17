@@ -100,9 +100,13 @@ public class ReservaController {
 	       }
 		}
 	       
+		String cadena = "[["+vector[0]+"]";
+		for (int i = 1; i < vector.length; i++) {
+			cadena+=",["+vector[i]+"]";
+		}
+		cadena += "]";
 		
-		
-		model.addAttribute("reservasMes", vector);
+		model.addAttribute("reservasMes", cadena);
 		model.addAttribute("fechaactual", new Date());
 		model.addAttribute("listadoDeReservas", reservaDao.getReservas());
 		model.addAttribute("mapActividades", auxmapActividades);

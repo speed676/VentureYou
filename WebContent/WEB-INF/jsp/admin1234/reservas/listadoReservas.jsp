@@ -74,15 +74,15 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="box">
-                  <header>
-                    <h5>Reservas</h5>
+                	<header>
+                  <h5>Reservas</h5>
                     <div class="toolbar">
                       
                         <a id="botonnCSV" class='btn'>Descargar datos</a>
                       	
                     </div>
                   </header>
-                 <div class="body" id="bar" style="height: 250px;"></div>
+                  <div class="body" id="bar" style="height: 250px;"></div>
                 </div>
               </div>
             </div>
@@ -223,6 +223,10 @@
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.selection.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.resize.min.js"></script>
 
+	<!--jQuery -->
+    <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.categories.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.flot.pie.min.js"></script>
+
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.dataTables.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/admin/js/dataTables.bootstrap.js"></script>
     <script src="${pageContext.request.contextPath}/resources/admin/js/jquery.tablesorter.min.js"></script>
@@ -247,37 +251,31 @@
 
 		$(document).ready(function(){
 	
-	    	var contexto = "${pageContext.request.contextPath}";
+			var contexto = "${pageContext.request.contextPath}";
 			
-	    	var data = [ ["Enero", 1], ["Febrero", 10], ["Marzo", 8], ["Abril", 4], ["Mayo", 13], ["Junio", 17], ["Julio", 9],
-	        ["Agosto", 9], ["Septiembre", 9], ["Octubre", 9], ["Noviembre", 9], ["Diciembre", 9]]; 
-	
-		    var data2 = [];
-		  	for (var i = 0; i < 14; i += 0.1) {
-		  		data2.push([i, Math.sqrt(i * 10)]);
-		  	}
-	    	  
-	        Metis.dashboard();
-	        $.plot("#bar", [ 
+			var meses=${reservasMes};
+	    	var data = [ ["Enero", meses[0]], ["Febrero", meses[1]], ["Marzo", meses[2]], ["Abril", meses[3]], ["Mayo", meses[4]], ["Junio", meses[5]], ["Julio", meses[6]],
+	        ["Agosto", meses[7]], ["Septiembre", meses[8]], ["Octubre", meses[9]], ["Noviembre", meses[10]], ["Diciembre", meses[11]]];
+	    	
+	    	
+	        $.plot("#bar", [ data ],  
 			{
-			   	 label: "Reservas realizadas",                	 
-			   	 data: data,
-			  	 bars: { 	
-					 show: true, 
-				     fill: true,
-				     lineWidth: 1	                 
-				     //fillColor: '#AAAAAA'
-				},      
-			} ,
-			{
-				label: "Monitores contratados",
-				data: data2,
-				lines: { 
-					show: true 
+				series: {
+					bars: {
+						show: true,
+						barWidth: 0.6,
+						align: "center"
+					},
+				label: "Reservas por mes"
+	        
 				},
-				points: { show: false }
+				xaxis: {
+					mode: "categories",
+					tickLength: 0
+				}
+				
 			}
-		]);
+		);
           
           console.log("arrancado");
         });
