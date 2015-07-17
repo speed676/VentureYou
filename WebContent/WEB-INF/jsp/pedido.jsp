@@ -162,6 +162,8 @@
 									<li><i class="fa fa-phone pr-10"></i><a href="tel:+34 1234567890">+34 1234567890</a></li>
 									<li><i class="fa fa-envelope-o pr-10"></i><a href="mailto:naturadventure@email.com"> naturadventure@email.com</a></li>
 								</ul>
+							<p> <img src="${pageContext.request.contextPath}/resources/images/QR_${reserva.idreserva}.png" >
+							</p>
 						</div>
 						<div class="col-sm-7">
 							
@@ -169,7 +171,7 @@
 							
 					        <div class="well">
 					            <div class="row">
-					                <div class="col-xs-6 col-sm-6 col-md-6">
+					                <div class="col-xs-4 col-sm-4 col-md-4">
 					                    <address>
 					                        <strong>NaturAdventure S.A</strong>
 					                        <br>
@@ -179,7 +181,11 @@
 					                        <br>
 					                    </address>
 					                </div>
-					                <div class="col-xs-6 col-sm-6 col-md-6 text-right">
+					                <div class="col-xs-3 col-sm-3 col-md-3">
+					                    <p> <img src="${pageContext.request.contextPath}/resources/images/QR_${reserva.idreserva}.png" height="80" width="80">
+										</p>
+					                </div>
+					                <div class="col-xs-5 col-sm-5 col-md-5 text-right">
 					                    <p>
 					                    <c:set var="fechaReserva" value="${reserva.fechaReserva}" />
 					                    
