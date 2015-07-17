@@ -182,7 +182,7 @@
 					                    </address>
 					                </div>
 					                <div class="col-xs-3 col-sm-3 col-md-3">
-					                    <p> <img src="${pageContext.request.contextPath}/resources/images/QR_${reserva.idreserva}.png" height="80" width="80">
+					                    <p> <img src="${pageContext.request.contextPath}/resources/images/QR_${reserva.idReserva}.png" height="80" width="80">
 										</p>
 					                </div>
 					                <div class="col-xs-5 col-sm-5 col-md-5 text-right">
