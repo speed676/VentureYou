@@ -180,13 +180,13 @@
 					</c:if>
 					<c:choose>
                             <c:when test="${esoferta}">
-                            <div class="col-sm-6 col-md-3 isotope-item ofertas">
+                            <div class="col-xs-12 col-sm-6 col-md-3 isotope-item ofertas">
                             </c:when>
                             <c:when test="${esnovedad && !esoferta}">
-                            <div class="col-sm-6 col-md-3 isotope-item novedades">
+                            <div class="col-xs-12 col-sm-6 col-md-3 isotope-item novedades">
                             </c:when>
                             <c:when test="${!esnovedad && !esoferta}">
-                            <div class="col-sm-6 col-md-3 isotope-item">  
+                            <div class="col-xs-12 col-sm-6 col-md-3 isotope-item">  
                             </c:when>
                     </c:choose>
 						
