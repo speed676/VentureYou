@@ -169,7 +169,7 @@ public class ReservaDAO {
 	}
 	
 	public List<Reserva> getReservasMonitor(String monitor) {
-		 return this.jdbcTemplate.query("select idReserva, nombreCliente, telefonoCliente, emailCliente, horaInicio, estado, numParticipantes, fechaReserva, fechaActividad, nivel, idActividad from reserva where monitor = ? ", new Object[] {monitor}, new ReservaMapper());
+		 return this.jdbcTemplate.query("select idReserva, nombreCliente, telefonoCliente, emailCliente, horaInicio, estado, numParticipantes, fechaReserva, fechaActividad, nivel, idActividad, monitor from reserva where monitor = ? ", new Object[] {monitor}, new ReservaMapper());
 	 }
 	
 }

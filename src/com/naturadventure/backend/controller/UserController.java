@@ -194,19 +194,32 @@ public class UserController {
           return "admin1234/login";
        } 
 
+       
+       
        List<Monitor> listaMonitores = new LinkedList<Monitor>(monitorDao.getMonitores());
        HashMap<String, List<String>> mo = new HashMap<String, List<String>>();
        
        //System.out.println(actividadDao.getActividades());
-
+       String cadena = "[";
+       int cont =0;
        
        Iterator<Monitor> it = listaMonitores.iterator();
        while (it.hasNext()) {
-		Monitor monitor = (Monitor) it.next();
-		//Lista de tipos:
-		mo.put(monitor.getUsuario(), supervisarDao.getTiposActividadesSupervisadasPorMonitor(monitor.getUsuario()));
-		
-	}
+			Monitor monitor = (Monitor) it.next();
+			//Lista de tipos:
+			mo.put(monitor.getUsuario(), supervisarDao.getTiposActividadesSupervisadasPorMonitor(monitor.getUsuario()));
+			System.out.println(monitor.getUsuario());
+			List<Reserva> listaReservaMonitor = reservaDao.getReservasMonitor(monitor.getUsuario());
+			if(cont == 0)
+				cadena += "['"+monitor.getUsuario()+"', "+listaReservaMonitor.size()+"]";
+			else
+				cadena += ",['"+monitor.getUsuario()+"', "+listaReservaMonitor.size()+"]";
+			cont++;
+       }
+       cadena += "]";
+       
+       System.out.println(cadena);
+       model.addAttribute("datosCSV", cadena);
        
        if(listaMonitores != null)
     	   model.addAttribute("monitores", listaMonitores);
