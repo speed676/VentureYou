@@ -12,7 +12,7 @@
 
 							<!-- logo -->
 							<div class="logo smooth-scroll">
-								<a href="index.html"><img id="logo" src="images/logo.png" alt="logo"></a>
+								<a href="index.html"><img id="logo" src="${pageContext.request.contextPath}/resources/images/logo.png" alt="logo"></a>
 							</div>
 
 							<!-- name-and-slogan -->
